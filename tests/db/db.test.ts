@@ -98,7 +98,7 @@ describe('кейсы', () => {
     expect(res.item.id).toBeTruthy();
     const inv = await db.query(`select * from public.user_items where user_id = $1 and status = 'owned'`, [u.id]);
     expect(inv.rows.length).toBe(1);
-    const tx = await db.query(`select amount from public.transactions where user_id = $1 and type = 'case_open'`, [u.id]);
+    const tx = await db.query<any>(`select amount from public.transactions where user_id = $1 and type = 'case_open'`, [u.id]);
     expect(Number(tx.rows[0].amount)).toBe(-Number(c.price));
     const op = await one<any>(db, 'select * from public.case_openings where user_id = $1', [u.id]);
     expect(op.server_seed_hash).toBe(sha('serverseed-' + u.id));
