@@ -5,11 +5,13 @@ import { rpc } from '@/lib/supabase/admin';
 import { applyAction, BjRuleError, payoutFor } from '@/lib/game/blackjack';
 import { getGame, toClient } from '@/lib/blackjack-server';
 
-const body = z.object({ gameId: uuid, action: z.enum(['hit', 'stand', 'double']) });
+const body = z.object({ gameId: uuid, version: z.number().int().min(0), action: z.enum(['hit', 'stand', 'double']) });
 
 export const POST = route({ body, limit: [90, 60] }, async ({ user, body }) => {
   const game = await getGame(user.id, body.gameId);
   if (!game || game.status !== 'active') throw new ApiError(409, 'stale_game', 'Партия уже завершена');
+  // защита от двойного нажатия: действие применяется только к той версии партии, которую видел игрок
+  if (game.version !== body.version) throw new ApiError(409, 'stale_game', 'Партия уже изменилась — обновите экран');
   let r;
   try {
     r = applyAction(game.state, body.action);

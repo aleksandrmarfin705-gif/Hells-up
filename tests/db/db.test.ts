@@ -375,6 +375,23 @@ describe('RLS и права', () => {
     }
   });
 
+  it('админ-токен (app_role=admin) видит все обращения, обычный пользователь — только свои', async () => {
+    const a = await makeUser(db);
+    const b = await makeUser(db);
+    await db.query(`insert into public.support_threads (user_id, subject) values ($1, 'AdmA'), ($2, 'AdmB')`, [a.id, b.id]);
+    await db.exec('set role authenticated');
+    try {
+      await db.exec(`select set_config('request.jwt.claims', '{"sub":"${a.id}","app_role":"user"}', false)`);
+      const own = await db.query<any>(`select subject from public.support_threads where subject like 'Adm%'`);
+      expect(own.rows.map((x) => x.subject)).toEqual(['AdmA']);
+      await db.exec(`select set_config('request.jwt.claims', '{"sub":"${a.id}","app_role":"admin"}', false)`);
+      const all = await db.query<any>(`select subject from public.support_threads where subject like 'Adm%' order by subject`);
+      expect(all.rows.map((x) => x.subject)).toEqual(['AdmA', 'AdmB']);
+    } finally {
+      await db.exec('reset role');
+    }
+  });
+
   it('статистика и админ-статистика возвращаются', async () => {
     const u = await makeUser(db);
     const st: any = await rpc(db, 'user_stats', u.id);

@@ -39,10 +39,11 @@ create policy game_events_public_read     on public.game_events     for select t
 -- Чат поддержки: читать может только владелец (sub в JWT, который выдаёт наш сервер) .
 grant select on public.support_threads  to authenticated;
 grant select on public.support_messages to authenticated;
+-- Токен выдаёт только наш сервер (подпись JWT-секретом проекта); claim app_role=admin получают лишь ADMIN_TELEGRAM_IDS.
 create policy support_threads_owner_read on public.support_threads for select to authenticated
-  using (user_id = nullif(auth.jwt() ->> 'sub', '')::uuid);
+  using (user_id = nullif(auth.jwt() ->> 'sub', '')::uuid or (auth.jwt() ->> 'app_role') = 'admin');
 create policy support_messages_owner_read on public.support_messages for select to authenticated
-  using (exists (select 1 from public.support_threads t
+  using ((auth.jwt() ->> 'app_role') = 'admin' or exists (select 1 from public.support_threads t
                   where t.id = thread_id and t.user_id = nullif(auth.jwt() ->> 'sub', '')::uuid));
 
 -- Функции: только service_role.

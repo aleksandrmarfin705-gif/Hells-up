@@ -15,7 +15,7 @@ export const GET = route({ ignoreMaintenance: true }, async ({ user, isAdmin }) 
     },
     isAdmin,
     settings,
-    realtime: url && anonKey ? { url, anonKey, token: await createRealtimeToken(user.id) } : null,
+    realtime: url && anonKey ? { url, anonKey, token: await createRealtimeToken(user.id, isAdmin) } : null,
   };
   return out;
 });

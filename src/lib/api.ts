@@ -66,7 +66,7 @@ export function route<S extends z.ZodTypeAny | undefined = undefined>(
   opts: Opts<S>,
   handler: (ctx: Ctx<S extends z.ZodTypeAny ? z.infer<S> : undefined>) => Promise<unknown | Response>,
 ) {
-  return async (req: NextRequest, routeCtx?: { params?: Promise<Record<string, string>> }): Promise<Response> => {
+  return async (req: NextRequest, routeCtx: { params: Promise<Record<string, string>> }): Promise<Response> => {
     try {
       const auth = opts.auth ?? 'user';
 
@@ -117,7 +117,7 @@ export function route<S extends z.ZodTypeAny | undefined = undefined>(
         }
       }
 
-      const params = (await routeCtx?.params) ?? {};
+      const params = (await routeCtx.params) ?? {};
       const out = await handler({ req, user, isAdmin, body, params, query: req.nextUrl.searchParams } as any);
       if (out instanceof Response) return out;
       return json(out ?? { ok: true });

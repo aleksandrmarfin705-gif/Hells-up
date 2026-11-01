@@ -54,10 +54,10 @@ export function clearSessionCookie(res: NextResponse) {
 }
 
 /** Токен для Supabase Realtime (чат поддержки): JWT, подписанный секретом проекта, sub = наш user id. */
-export async function createRealtimeToken(userId: string): Promise<string | null> {
+export async function createRealtimeToken(userId: string, isAdmin = false): Promise<string | null> {
   const secret = env.supabaseJwtSecret();
   if (!secret) return null;
-  return new SignJWT({ role: 'authenticated', aud: 'authenticated' })
+  return new SignJWT({ role: 'authenticated', aud: 'authenticated', app_role: isAdmin ? 'admin' : 'user' })
     .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
     .setSubject(userId)
     .setIssuedAt()
