@@ -47,7 +47,15 @@ export async function mockApi(page: Page, opts: Opts = {}) {
     if (cm) return ok(caseDetail(cm[1]));
     if (p === '/api/inventory') return ok({ items: invItems });
     if (p === '/api/items') return ok({ items });
-    if (p === '/api/history') return ok({ type: url.searchParams.get('type'), page: 1, size: 15, total: 0, rows: [] });
+    if (p === '/api/history') {
+      const type = url.searchParams.get('type');
+      const rows = type === 'balance' ? [
+        { id: 't1', type: 'topup', amount: 1000, balance_after: 6000, meta: {}, created_at: new Date(Date.now() - 3600000).toISOString() },
+        { id: 't2', type: 'case_open', amount: -900, balance_after: 5100, meta: {}, created_at: new Date(Date.now() - 1800000).toISOString() },
+        { id: 't3', type: 'welcome', amount: 5000, balance_after: 5000, meta: {}, created_at: new Date(Date.now() - 86400000).toISOString() },
+      ] : [];
+      return ok({ type, page: 1, size: 15, total: rows.length, rows });
+    }
     if (p === '/api/profile') return ok({ stats: { cases_opened: 42, items_owned: 10, inventory_value: 9999, upgrades_total: 5, upgrades_won: 2, roulette_bets: 12, roulette_wins: 5, blackjack_games: 9, blackjack_wins: 4, total_spent: 20000, total_won: 18000 } });
     if (p === '/api/roulette/state') {
       const now = Date.now();

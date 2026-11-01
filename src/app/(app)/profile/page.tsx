@@ -46,7 +46,10 @@ export default function ProfilePage() {
         </div>
         <div className="mt-5 rounded-2xl border border-white/10 bg-black/40 px-4 py-3.5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-white/40">Виртуальный баланс</p>
-          <Money value={u?.balance ?? 0} size={26} className="accent-text mt-1 text-[32px]" />
+          <div className="mt-1 flex items-center justify-between gap-3">
+            <Money value={u?.balance ?? 0} size={26} className="accent-text text-[32px]" />
+            <Link href="/topup" className="rounded-full bg-lime-400 px-4 py-2 text-[13px] font-semibold text-[#0d1403]">Пополнить</Link>
+          </div>
         </div>
       </section>
 
