@@ -9,7 +9,7 @@ async function noHorizontalScroll(page: Page) {
   expect(r.sw, `горизонтальная прокрутка: scrollWidth ${r.sw} > ${r.iw}`).toBeLessThanOrEqual(r.iw);
 }
 
-const USER_PAGES = ['/', '/cases', `/cases/${caseList[3].id}`, '/inventory', '/upgrade', '/games', '/games/roulette', '/games/blackjack', '/profile', '/history', '/support', '/fair'];
+const USER_PAGES = ['/', '/topup', '/cases', `/cases/${caseList[3].id}`, '/inventory', '/upgrade', '/games', '/games/roulette', '/games/blackjack', '/profile', '/history', '/support', '/fair'];
 const ADMIN_PAGES = ['/admin', '/admin/users', '/admin/cases', '/admin/items', '/admin/games', '/admin/support', '/admin/settings', '/admin/audit'];
 
 test.describe('состояния подключения', () => {
@@ -90,11 +90,40 @@ test.describe('сценарии', () => {
     }
   });
 
-  test('пополнение демо-баланса вызывает сервер', async ({ page }) => {
+  test('кнопка «+» открывает страницу пополнения; «Продолжить» не меняет баланс и ничего не отправляет', async ({ page }) => {
     const calls: string[] = [];
     await mockApi(page, { calls });
     await page.goto('/');
-    await page.getByRole('button', { name: 'Пополнить демо-баланс' }).click();
-    await expect.poll(() => calls.some((c) => c === 'POST /api/topup')).toBe(true);
+    await page.getByRole('link', { name: 'Пополнить баланс' }).click();
+    await expect(page).toHaveURL(/\/topup$/);
+    await expect(page.getByRole('heading', { name: 'Пополнить баланс' })).toBeVisible();
+    // выбор суммы
+    await page.getByRole('button', { name: /5\s?000\s*монет/ }).click();
+    await expect(page.getByText('Вы выбрали')).toBeVisible();
+    await page.getByRole('button', { name: 'Продолжить' }).click();
+    await expect(page.getByText('Функция пока недоступна')).toBeVisible();
+    // ни одного запроса на изменение баланса или платёж
+    expect(calls.filter((c) => c.startsWith('POST') && /topup|pay|invoice/.test(c))).toEqual([]);
+    // история с понятными статусами
+    await expect(page.getByText('История операций')).toBeVisible();
+    await expect(page.getByText('Успешно').first()).toBeVisible();
+  });
+
+  test('своя сумма: ниже минимума кнопка «Продолжить» отключена', async ({ page }) => {
+    await mockApi(page);
+    await page.goto('/topup');
+    await page.getByLabel('Своя сумма').fill('5');
+    await expect(page.getByText('Минимум 10')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Продолжить' })).toBeDisabled();
+    await page.getByLabel('Своя сумма').fill('250');
+    await expect(page.getByRole('button', { name: 'Продолжить' })).toBeEnabled();
+  });
+
+  test('демо-монеты: кнопка вызывает серверную выдачу', async ({ page }) => {
+    const calls: string[] = [];
+    await mockApi(page, { calls });
+    await page.goto('/topup');
+    await page.getByRole('button', { name: /Получить \+/ }).click();
+    await expect.poll(() => calls.includes('POST /api/topup')).toBe(true);
   });
 });

@@ -9,12 +9,9 @@ import {
   IconShield, IconSparkle, IconSupport, IconUpgrade,
 } from '@/components/brand/Icons';
 import { AnimatedNumber } from '@/components/ui/ui';
-import { useAction, useMe, useSetBalance } from '@/lib/client/hooks';
-import { api } from '@/lib/client/api';
+import { useMe } from '@/lib/client/hooks';
 import { haptic, tg } from '@/lib/client/telegram';
-import { toast } from '@/lib/client/store';
 import { cn } from '@/lib/cn';
-import { fmt } from '@/lib/format';
 
 const MAIN = [
   { href: '/', label: 'Главная', Icon: IconHome },
@@ -36,7 +33,6 @@ export function AppShell({ children }: { children: ReactNode }) {
   const path = usePathname();
   const router = useRouter();
   const { data: me } = useMe();
-  const setBalance = useSetBalance();
 
   // Нативная кнопка «Назад» Telegram на вложенных страницах
   useEffect(() => {
@@ -48,10 +44,6 @@ export function AppShell({ children }: { children: ReactNode }) {
     else { bb.show(); bb.onClick(back); }
     return () => bb.offClick?.(back);
   }, [path, router]);
-
-  const topup = useAction(() => api<{ balance: number; amount: number }>('/api/topup', { method: 'POST', body: {} }), {
-    onSuccess: (r) => { setBalance(r.balance); haptic.notify('success'); toast.success(`+${fmt(r.amount)} демо-монет`, 'Виртуальный баланс пополнен'); },
-  });
 
   const nav = me?.isAdmin ? [...MORE, { href: '/admin', label: 'Админка', Icon: IconShield }] : MORE;
 
@@ -80,12 +72,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <Coin size={18} />
                 <span className="text-[15px] font-semibold text-white"><AnimatedNumber value={me?.user.balance ?? 0} /></span>
               </Link>
-              <button
-                onClick={() => topup.mutate(undefined)} disabled={topup.isPending} aria-label="Пополнить демо-баланс"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-lime-400 text-[#0d1403] shadow-[0_6px_18px_-6px_rgba(198,244,50,.6)] transition active:scale-90 disabled:opacity-50"
+              <Link
+                href="/topup" aria-label="Пополнить баланс" onClick={() => haptic.select()}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-lime-400 text-[#0d1403] shadow-[0_6px_18px_-6px_rgba(198,244,50,.6)] transition active:scale-90"
               >
                 <IconPlus size={20} strokeWidth={2.4} />
-              </button>
+              </Link>
             </div>
           </div>
         </header>
