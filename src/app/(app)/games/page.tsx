@@ -21,8 +21,8 @@ export default function GamesPage() {
           <motion.div key={href} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
             <Link href={enabled ? href : '#'} aria-disabled={!enabled}
               className={`panel panel-hover noise relative block min-h-[190px] overflow-hidden p-5 ${enabled ? '' : 'pointer-events-none opacity-50'}`}
-              style={{ background: 'radial-gradient(80% 90% at 100% 0%, rgba(212,175,55,.16), transparent 60%), linear-gradient(180deg,#141416,#09090a)' }}>
-              <span className="text-gold-300"><Icon size={30} /></span>
+              style={{ background: 'radial-gradient(80% 90% at 100% 0%, rgba(198,244,50,.16), transparent 60%), linear-gradient(180deg,#141416,#09090a)' }}>
+              <span className="text-lime-300"><Icon size={30} /></span>
               <h2 className="h-display mt-3 text-4xl text-white">{title}</h2>
               <p className="mt-2 max-w-[15rem] text-sm leading-relaxed text-white/55">{text}</p>
               {!enabled && <p className="mt-3 text-xs text-rarity-mythic">Временно отключено</p>}

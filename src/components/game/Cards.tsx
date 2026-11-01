@@ -18,15 +18,15 @@ export function CaseCard({ c, index = 0, className }: { c: CaseSummary; index?: 
       className={className}
     >
       <Link href={`/cases/${c.id}`} onClick={() => haptic.select()} className="panel panel-hover group relative block overflow-hidden p-4 pb-4">
-        <div className="pointer-events-none absolute inset-0 opacity-70 transition group-hover:opacity-100" style={{ background: `radial-gradient(70% 55% at 50% 38%, ${c.accent}26, transparent 70%)` }} />
-        {c.is_featured && <span className="absolute left-3 top-3 z-10 rounded-full border border-gold-400/40 bg-gold-400/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-gold-200">Хит</span>}
+        <div className="pointer-events-none absolute inset-0 opacity-70 transition group-hover:opacity-100" style={{ background: 'radial-gradient(70% 55% at 50% 40%, rgba(198,244,50,.09), transparent 70%)' }} />
+        {c.is_featured && <span className="absolute left-3 top-3 z-10 rounded-full bg-lime-400 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#0d1403]">Хит</span>}
         <div className="relative flex justify-center pt-2 transition duration-500 group-hover:-translate-y-1 group-hover:scale-105">
-          <CaseArt art={c.art} accent={c.accent} imageUrl={c.image_url} size={132} />
+          <CaseArt art={c.art} imageUrl={c.image_url} size={132} />
         </div>
         <div className="relative mt-2 text-center">
-          <p className="h-display truncate text-[22px] leading-tight text-white">{c.name}</p>
+          <p className="h-display truncate text-[18px] leading-tight text-white">{c.name}</p>
           <p className="mt-0.5 text-[11px] text-white/40">{c.item_count} предметов</p>
-          <div className="mt-3 inline-flex items-center rounded-full border border-gold-400/30 bg-black/50 px-3.5 py-1.5 text-sm text-gold-100">
+          <div className="mt-3 inline-flex items-center rounded-full bg-white/[0.07] px-3.5 py-1.5 text-sm text-white">
             <Money value={c.price} size={15} />
           </div>
         </div>
@@ -46,7 +46,7 @@ export function ItemCard({
   return (
     <Tag
       onClick={onClick}
-      className={cn('panel relative overflow-hidden p-3 text-left transition', onClick && 'active:scale-[0.97]', selected ? 'ring-2 ring-gold-400' : '', className)}
+      className={cn('panel relative overflow-hidden p-3 text-left transition', onClick && 'active:scale-[0.97]', selected ? 'ring-2 ring-lime-400' : '', className)}
       style={{ borderColor: r.color + (selected ? 'aa' : '40') }}
     >
       <div className="pointer-events-none absolute inset-0" style={{ background: `radial-gradient(80% 60% at 50% 30%, ${r.color}24, transparent 75%)` }} />
@@ -56,7 +56,7 @@ export function ItemCard({
       <p className="relative mt-1 truncate text-[13px] font-semibold text-white">{item.name}</p>
       <div className="relative mt-1 flex items-center justify-between gap-2">
         <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: r.color }}>{r.label}</span>
-        <Money value={Number(item.virtual_price)} size={12} className="text-[12px] text-gold-200" />
+        <Money value={Number(item.virtual_price)} size={12} className="text-[12px] text-lime-200" />
       </div>
       {footer && <div className="relative mt-2">{footer}</div>}
     </Tag>

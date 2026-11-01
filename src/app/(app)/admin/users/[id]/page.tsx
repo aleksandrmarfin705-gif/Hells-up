@@ -38,7 +38,7 @@ export default function AdminUser() {
           <section className="panel p-5">
             <p className="h-display text-3xl text-white">{displayName(u)}</p>
             <p className="text-sm text-white/45">ID {u.telegram_id}{u.username ? ` · @${u.username}` : ''} · с {fmtDate(u.created_at)}</p>
-            <Money value={Number(u.balance)} size={22} className="gold-text mt-3 text-3xl" />
+            <Money value={Number(u.balance)} size={22} className="accent-text mt-3 text-3xl" />
             {u.is_banned && <p className="mt-3 rounded-xl border border-rarity-mythic/40 bg-rarity-mythic/10 px-3 py-2 text-sm text-rarity-mythic">Заблокирован{u.ban_reason ? `: ${u.ban_reason}` : ''}</p>}
             <div className="mt-4"><Button variant={u.is_banned ? 'dark' : 'danger'} onClick={() => (u.is_banned ? ban.mutate(false) : setBanConfirm(true))} loading={ban.isPending && u.is_banned}>{u.is_banned ? 'Разблокировать' : 'Заблокировать'}</Button></div>
           </section>
@@ -57,12 +57,12 @@ export default function AdminUser() {
             </div>
           )}
 
-          <h2 className="h-display mb-3 mt-8 text-[26px] text-white">Инвентарь</h2>
+          <h2 className="h-display mb-3 mt-8 text-[20px] text-white">Инвентарь</h2>
           {!q.data.inventory.length ? <p className="panel px-5 py-6 text-center text-sm text-white/40">Пусто</p> : (
             <div className="grid grid-cols-3 gap-2.5 md:grid-cols-6">{q.data.inventory.map((i: any) => <ItemCard key={i.id} item={i.item} size={56} />)}</div>
           )}
 
-          <h2 className="h-display mb-3 mt-8 text-[26px] text-white">Последние операции</h2>
+          <h2 className="h-display mb-3 mt-8 text-[20px] text-white">Последние операции</h2>
           <ul className="panel divide-y divide-white/5 overflow-hidden">
             {q.data.transactions.map((t: any) => (
               <li key={t.id} className="flex items-center justify-between px-4 py-2.5 text-sm"><span className="text-white/70">{t.type}</span><span className="text-xs text-white/35">{fmtDate(t.created_at)}</span><Money value={Number(t.amount)} signed size={12} className={Number(t.amount) > 0 ? 'text-emerald-400' : 'text-white/60'} /></li>

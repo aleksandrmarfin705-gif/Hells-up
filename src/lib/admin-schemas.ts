@@ -26,7 +26,7 @@ export const caseInput = z.object({
   name: z.string().trim().min(1, 'Укажите название').max(80),
   description: z.string().trim().max(500).default(''),
   price: z.number().int().min(0).max(1_000_000_000_000),
-  accent: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'Цвет вида #d4af37').default('#d4af37'),
+  accent: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'Цвет вида #c6f432').default('#c6f432'),
   art: z.enum(CASE_ARTS).default('chest'),
   image_url: optionalUrl,
   is_active: z.boolean().default(true),

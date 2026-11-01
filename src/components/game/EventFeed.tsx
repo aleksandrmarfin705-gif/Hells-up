@@ -13,7 +13,7 @@ export function EventFeed({ events }: { events: GameEvent[] }) {
     <ul className="panel divide-y divide-white/5 overflow-hidden">
       {events.map((e) => {
         const Icon = ICONS[e.kind];
-        const color = e.rarity ? rarityOf(e.rarity).color : '#d4af37';
+        const color = e.rarity ? rarityOf(e.rarity).color : '#c6f432';
         return (
           <li key={e.id} className="flex items-center gap-3 px-4 py-3">
             <span className="flex h-10 w-10 flex-none items-center justify-center rounded-xl border" style={{ color, borderColor: color + '44', background: color + '12' }}><Icon size={20} /></span>
@@ -24,7 +24,7 @@ export function EventFeed({ events }: { events: GameEvent[] }) {
                 {e.is_demo && <span className="ml-2 rounded border border-white/15 px-1 py-px text-[9px] uppercase tracking-wider text-white/40">демо</span>}
               </p>
             </div>
-            {e.amount != null && <Money value={Number(e.amount)} className="text-sm text-gold-200" size={13} />}
+            {e.amount != null && <Money value={Number(e.amount)} className="text-sm text-lime-200" size={13} />}
           </li>
         );
       })}

@@ -20,7 +20,7 @@ type Recent = { id: string; bet: number; outcome: Game['outcome']; payout: numbe
 const CHIPS = [10, 50, 100, 500, 1000, 5000];
 const OUTCOME = {
   win: { title: 'Победа!', color: 'text-emerald-400', glow: '#34d39966' },
-  blackjack: { title: 'BLACKJACK 3:2', color: 'gold-text', glow: '#d4af3799' },
+  blackjack: { title: 'BLACKJACK 3:2', color: 'accent-text', glow: '#c6f43299' },
   push: { title: 'Ничья', color: 'text-white', glow: '#ffffff33' },
   lose: { title: 'Поражение', color: 'text-rarity-mythic', glow: '#ff456044' },
 } as const;
@@ -59,10 +59,10 @@ export default function BlackjackPage() {
 
   return (
     <>
-      <div className="mb-4"><p className="eyebrow mb-1">Против дилера · демо</p><h1 className="h-display text-[34px] leading-none text-white">Blackjack</h1></div>
+      <div className="mb-4"><p className="eyebrow mb-1">Против дилера · демо</p><h1 className="h-display text-[28px] leading-none text-white">Blackjack</h1></div>
       {q.isLoading ? <Skeleton className="h-96" /> : (
-        <section className="relative overflow-hidden rounded-[1.75rem] border border-gold-400/25 px-4 py-6" style={{ background: 'radial-gradient(90% 70% at 50% 0%, #0f3a28 0%, #07150f 55%, #050505 100%)' }}>
-          <div className="pointer-events-none absolute inset-0 rounded-[1.75rem] ring-1 ring-inset ring-gold-400/10" />
+        <section className="relative overflow-hidden rounded-3xl border border-white/10 px-4 py-6" style={{ background: 'radial-gradient(90% 70% at 50% 0%, #17352a 0%, #0d1713 55%, #0b0c0e 100%)' }}>
+          <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/10" />
           {!g ? (
             <div className="relative py-4 text-center">
               <p className="h-display text-3xl text-white">Сделайте ставку</p>
@@ -70,14 +70,14 @@ export default function BlackjackPage() {
               <div className="scroll-x mt-6 justify-center">
                 {CHIPS.map((c) => (
                   <button key={c} onClick={() => { setBet(c); setCustom(''); haptic.select(); }}
-                    className={cn('flex h-12 min-w-[3.4rem] items-center justify-center rounded-full border-2 px-3 text-sm font-bold tabular-nums transition active:scale-90', !custom && bet === c ? 'border-gold-300 bg-gold-400/20 text-gold-100' : 'border-white/15 text-white/60')}>{c}</button>
+                    className={cn('flex h-12 min-w-[3.4rem] items-center justify-center rounded-full border-2 px-3 text-sm font-bold tabular-nums transition active:scale-90', !custom && bet === c ? 'border-lime-300 bg-lime-400/20 text-lime-100' : 'border-white/15 text-white/60')}>{c}</button>
                 ))}
               </div>
               <input inputMode="numeric" placeholder="Своя сумма" value={custom} onChange={(e) => setCustom(e.target.value.replace(/\D/g, '').slice(0, 9))}
-                className="mx-auto mt-3 block h-12 w-44 rounded-full border-2 border-white/15 bg-black/30 px-4 text-center text-[16px] font-bold text-white outline-none focus:border-gold-400" />
+                className="mx-auto mt-3 block h-12 w-44 rounded-full border-2 border-white/15 bg-black/30 px-4 text-center text-[16px] font-bold text-white outline-none focus:border-lime-400" />
               <p className="mt-2 text-xs text-white/35">Лимит {me?.settings.blackjack_min_bet}–{me?.settings.blackjack_max_bet}</p>
               <Button size="lg" className="mt-5 min-w-[220px]" loading={start.isPending} disabled={!enabled || amount < 1 || amount > (me?.user.balance ?? 0)} onClick={() => start.mutate(amount)}>
-                {!enabled ? 'Режим отключён' : amount > (me?.user.balance ?? 0) ? 'Недостаточно монет' : <>Раздать · <Money value={amount} className="text-[#1a1304]" /></>}
+                {!enabled ? 'Режим отключён' : amount > (me?.user.balance ?? 0) ? 'Недостаточно монет' : <>Раздать · <Money value={amount} className="text-[#0d1403]" /></>}
               </Button>
             </div>
           ) : (
@@ -88,10 +88,10 @@ export default function BlackjackPage() {
                   {oc ? (
                     <motion.div key="res" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 260, damping: 16 }} className="text-center" style={{ filter: `drop-shadow(0 0 18px ${oc.glow})` }}>
                       <p className={cn('h-display text-4xl', oc.color)}>{oc.title}</p>
-                      <p className="mt-0.5 text-sm text-white/60">{g.payout && g.payout > 0 ? <>Выплата <Money value={g.payout} className="text-gold-200" /></> : <>Ставка <Money value={g.bet} /> проиграна</>}</p>
+                      <p className="mt-0.5 text-sm text-white/60">{g.payout && g.payout > 0 ? <>Выплата <Money value={g.payout} className="text-lime-200" /></> : <>Ставка <Money value={g.bet} /> проиграна</>}</p>
                     </motion.div>
                   ) : (
-                    <motion.p key="bet" className="rounded-full border border-gold-400/30 bg-black/40 px-4 py-1.5 text-sm text-white/70" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Ставка <Money value={g.bet} className="text-gold-200" /></motion.p>
+                    <motion.p key="bet" className="rounded-full border border-lime-400/30 bg-black/40 px-4 py-1.5 text-sm text-white/70" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Ставка <Money value={g.bet} className="text-lime-200" /></motion.p>
                   )}
                 </AnimatePresence>
               </div>
@@ -99,7 +99,7 @@ export default function BlackjackPage() {
 
               {finished ? (
                 <div className="mt-6 grid gap-2.5">
-                  <Button size="lg" loading={start.isPending} disabled={g.bet > (me?.user.balance ?? 0)} onClick={() => start.mutate(g.bet)}>Ещё раз · <Money value={g.bet} className="text-[#1a1304]" /></Button>
+                  <Button size="lg" loading={start.isPending} disabled={g.bet > (me?.user.balance ?? 0)} onClick={() => start.mutate(g.bet)}>Ещё раз · <Money value={g.bet} className="text-[#0d1403]" /></Button>
                   <Button variant="dark" onClick={() => { setGame(null); }}>Изменить ставку</Button>
                 </div>
               ) : (
@@ -115,7 +115,7 @@ export default function BlackjackPage() {
         </section>
       )}
 
-      <h2 className="h-display mb-3 mt-8 text-[26px] text-white">Последние партии</h2>
+      <h2 className="h-display mb-3 mt-8 text-[20px] text-white">Последние партии</h2>
       {!q.data?.recent.length ? <p className="panel px-5 py-6 text-center text-sm text-white/40">Партий пока нет.</p> : (
         <ul className="panel divide-y divide-white/5 overflow-hidden">
           {q.data.recent.map((r) => (
@@ -137,7 +137,7 @@ function Hand({ label, total, cards, hiddenExtra }: { label: string; total: numb
     <div>
       <div className="mb-2 flex items-center justify-between">
         <span className="text-xs uppercase tracking-[0.22em] text-white/40">{label}</span>
-        {total !== null && <span className="rounded-full border border-gold-400/30 bg-black/40 px-2.5 py-0.5 text-sm font-semibold tabular-nums text-gold-100">{total}</span>}
+        {total !== null && <span className="rounded-full border border-lime-400/30 bg-black/40 px-2.5 py-0.5 text-sm font-semibold tabular-nums text-lime-100">{total}</span>}
       </div>
       <div className="flex min-h-[110px] flex-wrap justify-center gap-2">
         {cards.map((c, i) => <PlayingCard key={`${c}-${i}`} card={c} delay={i * 0.12} />)}

@@ -13,8 +13,9 @@ export default defineConfig({
   reporter: [['list']],
   use: { baseURL: `http://localhost:${PORT}`, launchOptions: { executablePath, args: ['--no-sandbox'] }, trace: 'off' },
   projects: [
-    { name: 'android', use: { ...devices['Pixel 7'] } },
-    { name: 'iphone', use: iphone },
+    { name: 'w360', use: { ...devices['Pixel 7'], viewport: { width: 360, height: 780 } } },
+    { name: 'w390', use: iphone },
+    { name: 'w430', use: { ...iphone, viewport: { width: 430, height: 932 } } },
     { name: 'desktop', use: { viewport: { width: 1280, height: 800 } } },
   ],
   webServer: {

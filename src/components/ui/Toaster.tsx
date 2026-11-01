@@ -19,9 +19,9 @@ export function Toaster() {
             onClick={() => dismiss(t.id)}
             role="status"
             className="pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-2xl border bg-surface-2/95 px-4 py-3 shadow-card backdrop-blur"
-            style={{ borderColor: t.kind === 'error' ? '#ff456055' : t.kind === 'success' ? '#d4af3755' : '#ffffff22' }}
+            style={{ borderColor: t.kind === 'error' ? '#ff456055' : t.kind === 'success' ? '#c6f43255' : '#ffffff22' }}
           >
-            <span className={`mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full ${t.kind === 'error' ? 'bg-rarity-mythic/20 text-rarity-mythic' : 'bg-gold-400/20 text-gold-300'}`}>
+            <span className={`mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full ${t.kind === 'error' ? 'bg-rarity-mythic/20 text-rarity-mythic' : 'bg-lime-400/20 text-lime-300'}`}>
               {t.kind === 'error' ? <IconClose size={12} /> : <IconCheck size={12} />}
             </span>
             <span className="min-w-0 flex-1">

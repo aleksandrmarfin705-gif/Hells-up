@@ -9,9 +9,9 @@ export function initTelegram() {
   try {
     w.ready();
     w.expand();
-    w.setHeaderColor?.('#050505');
-    w.setBackgroundColor?.('#050505');
-    w.setBottomBarColor?.('#050505');
+    w.setHeaderColor?.('#0b0c0e');
+    w.setBackgroundColor?.('#0b0c0e');
+    w.setBottomBarColor?.('#0b0c0e');
     w.disableVerticalSwipes?.();
   } catch {
     /* старые версии клиента — игнорируем */

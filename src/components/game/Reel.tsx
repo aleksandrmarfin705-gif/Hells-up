@@ -42,8 +42,8 @@ export function Reel({ pool, winner, onDone }: { pool: (ReelItem & { weight: num
   }, [x]);
 
   return (
-    <div ref={box} className="relative overflow-hidden rounded-2xl border border-gold-400/25 bg-black/60 py-4">
-      <div className="pointer-events-none absolute inset-y-0 left-1/2 z-10 w-0.5 -translate-x-1/2 bg-gradient-to-b from-gold-200 via-gold-400 to-gold-200 shadow-[0_0_16px_3px_rgba(212,175,55,.7)]" />
+    <div ref={box} className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/60 py-4">
+      <div className="pointer-events-none absolute inset-y-0 left-1/2 z-10 w-0.5 -translate-x-1/2 bg-gradient-to-b from-lime-200 via-lime-400 to-lime-200 shadow-[0_0_16px_3px_rgba(198,244,50,.7)]" />
       <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(90deg,#050505_0%,transparent_22%,transparent_78%,#050505_100%)]" />
       <motion.div style={{ x }} className="flex">
         {strip.map((it, i) => {

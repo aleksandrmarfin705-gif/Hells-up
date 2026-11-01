@@ -53,13 +53,13 @@ export default function InventoryPage() {
 
   return (
     <>
-      <PageTitle eyebrow="Коллекция" title="Инвентарь" right={q.data && <div className="text-right"><p className="text-[11px] uppercase tracking-widest text-white/40">{q.data.items.length} шт.</p><Money value={total} className="text-gold-200" size={15} /></div>} />
+      <PageTitle title="Мои предметы" right={q.data && <div className="text-right"><p className="text-[11px] uppercase tracking-widest text-white/40">{q.data.items.length} шт.</p><Money value={total} className="text-lime-200" size={15} /></div>} />
 
       <input className="input mb-3" placeholder="Поиск по названию" value={search} onChange={(e) => setSearch(e.target.value)} />
       <div className="scroll-x mb-2">
         {(['all', ...RARITY_ORDER] as const).map((r) => (
           <button key={r} onClick={() => { haptic.select(); setRarity(r); }}
-            className={cn('rounded-full border px-3.5 py-1.5 text-xs font-medium transition', rarity === r ? 'border-gold-400 bg-gold-400/15 text-gold-100' : 'border-white/10 text-white/50')}>
+            className={cn('rounded-full border px-3.5 py-1.5 text-xs font-medium transition', rarity === r ? 'border-lime-400 bg-lime-400/15 text-lime-100' : 'border-white/10 text-white/50')}>
             {r === 'all' ? 'Все' : RARITY[r].label}
           </button>
         ))}
@@ -74,7 +74,7 @@ export default function InventoryPage() {
       {q.isError ? <ErrorState onRetry={() => q.refetch()} /> : q.isLoading ? (
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">{Array.from({ length: 6 }, (_, i) => <Skeleton key={i} className="h-40" />)}</div>
       ) : !q.data?.items.length ? (
-        <EmptyState icon={<IconInventory size={44} />} title="Здесь пока пусто" text="Откройте первый кейс — предметы появятся в инвентаре." action={<Link href="/cases"><Button>К кейсам</Button></Link>} />
+        <EmptyState icon={<IconInventory size={44} />} title="Здесь пока пусто" text="Откройте первый кейс — предметы появятся здесь." action={<Link href="/cases"><Button>К кейсам</Button></Link>} />
       ) : !items.length ? (
         <p className="panel px-5 py-10 text-center text-sm text-white/45">Ничего не найдено по фильтрам.</p>
       ) : (
@@ -96,7 +96,7 @@ export default function InventoryPage() {
         )}
       </Modal>
       <ConfirmDialog open={confirm} onOpenChange={setConfirm} loading={sell.isPending} title="Продать предмет?"
-        text={sel && <>«{sel.item.name}» будет продан за <Money value={Number(sel.item.virtual_price)} className="text-gold-200" /> виртуальных монет. Это действие нельзя отменить.</>}
+        text={sel && <>«{sel.item.name}» будет продан за <Money value={Number(sel.item.virtual_price)} className="text-lime-200" /> виртуальных монет. Это действие нельзя отменить.</>}
         confirmLabel="Продать" onConfirm={() => sel && sell.mutate(sel.id)} />
     </>
   );

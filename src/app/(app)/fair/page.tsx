@@ -11,7 +11,7 @@ import { fmtDate } from '@/lib/format';
 type Active = { id: string; server_seed_hash: string; client_seed: string; nonce: number };
 type Revealed = { id: string; server_seed: string; server_seed_hash: string; client_seed: string; nonce: number; revealed_at: string };
 
-const Mono = ({ children }: { children: React.ReactNode }) => <p className="break-all rounded-lg bg-black/50 px-3 py-2 font-mono text-[12px] text-gold-100/90">{children}</p>;
+const Mono = ({ children }: { children: React.ReactNode }) => <p className="break-all rounded-lg bg-black/50 px-3 py-2 font-mono text-[12px] text-lime-100/90">{children}</p>;
 
 export default function FairPage() {
   const qc = useQueryClient();
@@ -34,7 +34,7 @@ export default function FairPage() {
     <>
       <PageTitle eyebrow="Provably fair" title="Честность" />
       <p className="mb-5 text-sm leading-relaxed text-white/55">
-        Каждый результат вычисляется на сервере: <span className="font-mono text-gold-200">roll = HMAC_SHA256(server_seed, client_seed:nonce:cursor)</span> → число от 0 до 1.
+        Каждый результат вычисляется на сервере: <span className="font-mono text-lime-200">roll = HMAC_SHA256(server_seed, client_seed:nonce:cursor)</span> → число от 0 до 1.
         Заранее вам показывается только хэш server seed. После обновления seed мы раскрываем прежний — и вы можете пересчитать все свои результаты.
       </p>
 
@@ -65,7 +65,7 @@ export default function FairPage() {
         {out && <div className="space-y-2"><p className="text-xs text-white/40">Хэш seed</p><Mono>{out.hash}</Mono><p className="text-xs text-white/40">Roll (0 ≤ x &lt; 1)</p><Mono>{out.roll.toFixed(12)}</Mono></div>}
       </section>
 
-      <h2 className="h-display mb-3 mt-8 text-[26px] text-white">Раскрытые seed</h2>
+      <h2 className="h-display mb-3 mt-8 text-[20px] text-white">Раскрытые seed</h2>
       {!q.data?.revealed.length ? <p className="panel px-5 py-6 text-center text-sm text-white/40">Пока нет раскрытых seed.</p> : (
         <ul className="space-y-3">
           {q.data.revealed.map((r) => (

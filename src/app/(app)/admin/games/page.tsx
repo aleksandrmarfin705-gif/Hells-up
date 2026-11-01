@@ -27,7 +27,7 @@ export default function AdminGames() {
         { key: 'blackjack_max_bet', label: 'Blackjack: максимальная ставка', type: 'int' },
       ]} />
 
-      <h2 className="h-display mb-3 mt-8 text-[26px] text-white">Игровые операции</h2>
+      <h2 className="h-display mb-3 mt-8 text-[20px] text-white">Игровые операции</h2>
       {!d ? <Skeleton className="h-60" /> : (
         <div className="space-y-5">
           <Block title="Открытия кейсов" rows={d.openings.map((o: any) => [`${nm(o.user)} · ${o.case?.name}`, `${o.item?.name}`, <Money key="m" value={Number(o.price_paid)} size={11} />, fmtDate(o.created_at)])} />

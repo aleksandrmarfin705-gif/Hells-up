@@ -29,11 +29,11 @@ export default function HistoryPage() {
 
   return (
     <>
-      <PageTitle eyebrow="Журнал" title="История" />
+      <PageTitle title="История" />
       <div className="scroll-x mb-4">
         {TABS.map((t) => (
           <button key={t.value} onClick={() => { setTab(t.value); setPage(1); }}
-            className={cn('rounded-full border px-4 py-2 text-[13px] font-medium transition', tab === t.value ? 'border-gold-400 bg-gold-400/15 text-gold-100' : 'border-white/10 text-white/50')}>{t.label}</button>
+            className={cn('rounded-full border px-4 py-2 text-[13px] font-medium transition', tab === t.value ? 'border-lime-400 bg-lime-400/15 text-lime-100' : 'border-white/10 text-white/50')}>{t.label}</button>
         ))}
       </div>
       {q.isError ? <ErrorState onRetry={() => q.refetch()} /> : q.isLoading ? <Skeleton className="h-72" /> : !q.data?.rows.length ? (
@@ -60,7 +60,7 @@ function ItemLine({ item, sub, right }: { item: any; sub: string; right?: React.
 
 function Row({ tab, r }: { tab: Tab; r: any }) {
   switch (tab) {
-    case 'cases': return <ItemLine item={r.item} sub={`${r.case?.name ?? 'Кейс'} · ${fmtDate(r.created_at)}`} right={<div className="text-right"><Money value={Number(r.item.virtual_price)} size={12} className="text-sm text-gold-200" /><p className="text-[11px] text-white/35">−{Number(r.price_paid)}</p></div>} />;
+    case 'cases': return <ItemLine item={r.item} sub={`${r.case?.name ?? 'Кейс'} · ${fmtDate(r.created_at)}`} right={<div className="text-right"><Money value={Number(r.item.virtual_price)} size={12} className="text-sm text-lime-200" /><p className="text-[11px] text-white/35">−{Number(r.price_paid)}</p></div>} />;
     case 'items': return <ItemLine item={r.item} sub={`${r.source === 'case' ? 'Из кейса' : r.source === 'upgrade' ? 'Улучшение' : 'Выдан'} · ${fmtDate(r.acquired_at)}`} right={<span className="text-xs text-white/40">{r.status === 'owned' ? 'в инвентаре' : r.status === 'sold' ? 'продан' : 'потрачен'}</span>} />;
     case 'sales': return <ItemLine item={r.item} sub={fmtDate(r.closed_at)} right={<Money value={Number(r.sold_price)} signed className="text-sm text-emerald-400" size={12} />} />;
     case 'upgrades': return (

@@ -40,7 +40,7 @@ export default function AdminItems() {
             <li key={i.id} className={`flex items-center gap-3 px-4 py-3 ${i.is_active ? '' : 'opacity-45'}`}>
               <ItemArt art={i.art} rarity={i.rarity} imageUrl={i.image_url} size={42} glow={false} />
               <div className="min-w-0 flex-1"><p className="truncate text-sm font-semibold text-white">{i.name}</p><RarityBadge rarity={i.rarity} className="mt-0.5" /></div>
-              <Money value={Number(i.virtual_price)} size={12} className="text-sm text-gold-200" />
+              <Money value={Number(i.virtual_price)} size={12} className="text-sm text-lime-200" />
               <button aria-label="Изменить" className="p-1.5 text-white/50 hover:text-white" onClick={() => setEdit({ ...i, image_url: i.image_url ?? '', virtual_price: String(i.virtual_price) } as any)}><IconEdit size={18} /></button>
               <button aria-label="Удалить" className="p-1.5 text-white/40 hover:text-rarity-mythic" onClick={() => setDel(i)}><IconTrash size={18} /></button>
             </li>
@@ -58,7 +58,7 @@ export default function AdminItems() {
             </div>
             <input className="input" inputMode="numeric" placeholder="Виртуальная цена" value={edit.virtual_price} onChange={(e) => setEdit({ ...edit, virtual_price: e.target.value.replace(/\D/g, '') })} />
             <input className="input" placeholder="Ссылка на изображение (https, необязательно)" value={edit.image_url} onChange={(e) => setEdit({ ...edit, image_url: e.target.value.trim() })} />
-            <label className="flex items-center gap-2 text-sm text-white/70"><input type="checkbox" checked={edit.is_active} onChange={(e) => setEdit({ ...edit, is_active: e.target.checked })} className="h-4 w-4 accent-[#d4af37]" />Активен</label>
+            <label className="flex items-center gap-2 text-sm text-white/70"><input type="checkbox" checked={edit.is_active} onChange={(e) => setEdit({ ...edit, is_active: e.target.checked })} className="h-4 w-4 accent-[#c6f432]" />Активен</label>
             <Button full size="lg" loading={save.isPending} disabled={!edit.name.trim()} onClick={() => save.mutate(undefined)}>Сохранить</Button>
           </div>
         )}

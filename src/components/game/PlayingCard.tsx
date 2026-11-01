@@ -15,8 +15,8 @@ export function PlayingCard({ card, hidden, small, delay = 0 }: { card?: number;
       className={cn('relative flex-none select-none rounded-xl shadow-[0_10px_24px_-8px_rgba(0,0,0,.9)]', w)}
     >
       {hidden || card === undefined ? (
-        <div className="absolute inset-0 rounded-xl border border-gold-400/50 bg-[repeating-linear-gradient(45deg,#17120a_0_6px,#0c0a05_6px_12px)] p-1.5">
-          <div className="flex h-full items-center justify-center rounded-lg border border-gold-400/40"><span className="h-display gold-text text-2xl">H</span></div>
+        <div className="absolute inset-0 rounded-xl border border-lime-400/50 bg-[repeating-linear-gradient(45deg,#17120a_0_6px,#0c0a05_6px_12px)] p-1.5">
+          <div className="flex h-full items-center justify-center rounded-lg border border-lime-400/40"><span className="h-display accent-text text-2xl">H</span></div>
         </div>
       ) : (
         <div className="absolute inset-0 flex flex-col justify-between rounded-xl border border-black/20 bg-[linear-gradient(160deg,#fbf7ea,#e8dfc4)] p-1.5">
