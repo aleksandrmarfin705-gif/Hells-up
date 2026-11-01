@@ -50,7 +50,7 @@ function UpgradeInner() {
   }, [src, catalog.data, edge, maxBp]);
 
   const chanceBp = src && target ? upgradeChanceBp(Number(src.item.virtual_price), Number(target.virtual_price), edge, maxBp) : 0;
-  const color = target ? rarityOf(target.rarity).color : '#d4af37';
+  const color = target ? rarityOf(target.rarity).color : '#c6f432';
 
   const run = useAction(() => api<UpgradeResult>('/api/upgrade', { body: { userItemId: srcId, targetItemId: target!.id, key: newKey() } }), {
     onSuccess: async (r) => {
@@ -84,7 +84,7 @@ function UpgradeInner() {
             <Gauge ref={gauge} chance={chanceBp / 10000} color={color} size={250}>
               {chanceBp > 0 ? (
                 <>
-                  <p className="h-display gold-text text-[52px] leading-none">{fmtPct(chanceBp / 10000)}</p>
+                  <p className="h-display accent-text text-[52px] leading-none">{fmtPct(chanceBp / 10000)}</p>
                   <p className="mt-1 text-[11px] uppercase tracking-[0.22em] text-white/40">шанс успеха</p>
                 </>
               ) : <p className="px-8 text-center text-xs text-white/40">Выберите предмет и цель</p>}
@@ -92,7 +92,7 @@ function UpgradeInner() {
 
             <div className="relative mt-5 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
               <SlotBtn label="Ваш предмет" item={src?.item ?? null} onClick={() => !busy && setPicker(true)} />
-              <span className="text-gold-400"><IconUpgrade size={26} /></span>
+              <span className="text-lime-400"><IconUpgrade size={26} /></span>
               <SlotBtn label="Цель" item={target} disabled={!src} onClick={() => {}} fixed />
             </div>
             {src && target && (
@@ -107,7 +107,7 @@ function UpgradeInner() {
 
           {src && (
             <>
-              <h2 className="h-display mb-3 mt-8 text-[26px] text-white">Выберите цель</h2>
+              <h2 className="h-display mb-3 mt-8 text-[20px] text-white">Выберите цель</h2>
               {catalog.isLoading ? <Skeleton className="h-40" /> : !targets.length ? (
                 <p className="panel px-5 py-8 text-center text-sm text-white/45">Для этого предмета нет доступных целей — попробуйте предмет подешевле.</p>
               ) : (
@@ -115,14 +115,14 @@ function UpgradeInner() {
                   {targets.map((t) => {
                     const bp = upgradeChanceBp(Number(src.item.virtual_price), Number(t.virtual_price), edge, maxBp);
                     return <ItemCard key={t.id} item={t} selected={target?.id === t.id} onClick={() => { haptic.select(); setTarget(t); }}
-                      footer={<p className="text-center text-[11px] font-semibold text-gold-300">шанс {fmtPct(bp / 10000)}</p>} />;
+                      footer={<p className="text-center text-[11px] font-semibold text-lime-300">шанс {fmtPct(bp / 10000)}</p>} />;
                   })}
                 </div>
               )}
             </>
           )}
 
-          <h2 className="h-display mb-3 mt-9 text-[26px] text-white">История улучшений</h2>
+          <h2 className="h-display mb-3 mt-9 text-[20px] text-white">История улучшений</h2>
           {!hist.data?.rows.length ? <p className="panel px-5 py-6 text-center text-sm text-white/40">Пока нет улучшений.</p> : (
             <ul className="panel divide-y divide-white/5 overflow-hidden">
               {hist.data.rows.map((h) => (
@@ -149,7 +149,7 @@ function UpgradeInner() {
       </Modal>
 
       <ConfirmDialog open={confirm} onOpenChange={setConfirm} loading={run.isPending} title="Запустить улучшение?" confirmLabel="Улучшить"
-        text={src && target && <>«{src.item.name}» → «{target.name}». Шанс успеха <b className="text-gold-200">{fmtPct(chanceBp / 10000)}</b>. При неудаче «{src.item.name}» будет потерян безвозвратно.</>}
+        text={src && target && <>«{src.item.name}» → «{target.name}». Шанс успеха <b className="text-lime-200">{fmtPct(chanceBp / 10000)}</b>. При неудаче «{src.item.name}» будет потерян безвозвратно.</>}
         onConfirm={() => run.mutate(undefined)} />
 
       {/* анимация + итог */}
@@ -158,7 +158,7 @@ function UpgradeInner() {
           <div className="py-4">
             <p className="eyebrow mb-3 text-center">Улучшаем…</p>
             <Gauge ref={gauge} chance={result.chance_bp / 10000} color={color} size={240}>
-              <p className="h-display gold-text text-5xl">{fmtPct(result.chance_bp / 10000)}</p>
+              <p className="h-display accent-text text-5xl">{fmtPct(result.chance_bp / 10000)}</p>
             </Gauge>
           </div>
         )}
@@ -179,7 +179,7 @@ function UpgradeInner() {
 
 function SlotBtn({ label, item, onClick, disabled, fixed }: { label: string; item: Item | null; onClick: () => void; disabled?: boolean; fixed?: boolean }) {
   return (
-    <button onClick={onClick} disabled={disabled || fixed} className="rounded-2xl border border-dashed border-gold-400/30 bg-black/30 p-3 text-center transition enabled:active:scale-95 disabled:opacity-60">
+    <button onClick={onClick} disabled={disabled || fixed} className="rounded-2xl border border-dashed border-lime-400/30 bg-black/30 p-3 text-center transition enabled:active:scale-95 disabled:opacity-60">
       <p className="mb-1 text-[10px] uppercase tracking-[0.18em] text-white/35">{label}</p>
       {item ? <><ItemArt art={item.art} rarity={item.rarity} imageUrl={item.image_url} size={64} className="mx-auto" /><p className="mt-1 truncate text-xs font-medium text-white">{item.name}</p></> :
         <div className="flex h-[88px] items-center justify-center text-3xl text-white/15">+</div>}

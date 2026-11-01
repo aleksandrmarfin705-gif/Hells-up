@@ -20,8 +20,8 @@ export function Chat({ messages, mine, onSend, sending, disabled, placeholder }:
       <div className="panel max-h-[55dvh] min-h-[240px] space-y-3 overflow-y-auto p-4">
         {messages.map((m) => (
           <div key={m.id} className={cn('flex', m.sender === mine ? 'justify-end' : 'justify-start')}>
-            <div className={cn('max-w-[82%] rounded-2xl px-3.5 py-2.5 text-[15px] leading-snug', m.sender === mine ? 'rounded-br-md bg-[linear-gradient(135deg,#f5e3a0,#d4af37_60%,#a67c1b)] text-[#1a1304]' : 'rounded-bl-md border border-white/10 bg-surface-3 text-white')}>
-              {m.sender !== mine && <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-wider text-gold-300">{m.sender === 'admin' ? 'Поддержка' : 'Пользователь'}</p>}
+            <div className={cn('max-w-[82%] rounded-2xl px-3.5 py-2.5 text-[15px] leading-snug', m.sender === mine ? 'rounded-br-md bg-[linear-gradient(135deg,#e4fb8c,#c6f432_60%,#8fbf1a)] text-[#0d1403]' : 'rounded-bl-md border border-white/10 bg-surface-3 text-white')}>
+              {m.sender !== mine && <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-wider text-lime-300">{m.sender === 'admin' ? 'Поддержка' : 'Пользователь'}</p>}
               <p className="whitespace-pre-wrap break-words">{m.body}</p>
               <p className={cn('mt-1 text-[10px]', m.sender === mine ? 'text-black/50' : 'text-white/35')}>{timeAgo(m.created_at)}</p>
             </div>

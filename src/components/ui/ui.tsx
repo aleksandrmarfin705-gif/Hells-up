@@ -8,16 +8,16 @@ import { haptic } from '@/lib/client/telegram';
 import { Modal } from '@/components/ui/Modal';
 
 type BtnProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'gold' | 'dark' | 'ghost' | 'danger'; size?: 'sm' | 'md' | 'lg'; loading?: boolean; full?: boolean;
+  variant?: 'primary' | 'dark' | 'ghost' | 'danger'; size?: 'sm' | 'md' | 'lg'; loading?: boolean; full?: boolean;
 };
 
 export const Button = forwardRef<HTMLButtonElement, BtnProps>(function Button(
-  { variant = 'gold', size = 'md', loading, full, className, children, disabled, onClick, ...rest }, ref,
+  { variant = 'primary', size = 'md', loading, full, className, children, disabled, onClick, ...rest }, ref,
 ) {
   const sizes = { sm: 'h-9 px-3.5 text-[13px]', md: 'h-12 px-5 text-[15px]', lg: 'h-14 px-7 text-base' }[size];
   const variants = {
-    gold: 'text-[#1a1304] font-semibold bg-[linear-gradient(135deg,#f5e3a0_0%,#d4af37_50%,#a67c1b_100%)] shadow-[0_8px_28px_-8px_rgba(212,175,55,.6),inset_0_1px_0_rgba(255,255,255,.45)] hover:brightness-110',
-    dark: 'text-gold-200 font-medium border border-gold-400/30 bg-surface-2 hover:border-gold-400/60 hover:bg-surface-3',
+    primary: 'text-[#0d1403] font-semibold bg-[linear-gradient(180deg,#d6f85e,#c6f432_55%,#aee21c)] shadow-[0_6px_20px_-8px_rgba(198,244,50,.55),inset_0_1px_0_rgba(255,255,255,.4)] hover:brightness-105',
+    dark: 'text-white font-medium border border-white/10 bg-surface-2 hover:border-white/25 hover:bg-surface-3',
     ghost: 'text-white/70 hover:text-white hover:bg-white/5',
     danger: 'text-rarity-mythic font-medium border border-rarity-mythic/40 bg-rarity-mythic/10 hover:bg-rarity-mythic/20',
   }[variant];
@@ -71,7 +71,7 @@ export function AnimatedNumber({ value, className }: { value: number; className?
 export function EmptyState({ title, text, action, icon }: { title: string; text?: string; action?: ReactNode; icon?: ReactNode }) {
   return (
     <div className="panel flex flex-col items-center px-6 py-12 text-center">
-      {icon && <div className="mb-4 text-gold-400/70">{icon}</div>}
+      {icon && <div className="mb-4 text-lime-400/70">{icon}</div>}
       <p className="h-display text-2xl text-white">{title}</p>
       {text && <p className="mt-2 max-w-xs text-sm text-white/50">{text}</p>}
       {action && <div className="mt-5">{action}</div>}
@@ -100,9 +100,9 @@ export function Segmented<T extends string>({
           <button
             key={o.value} role="tab" aria-selected={active}
             onClick={() => { haptic.select(); onChange(o.value); }}
-            className={cn('relative flex-1 whitespace-nowrap rounded-xl px-3 py-2 text-[13px] font-medium transition', active ? 'text-[#1a1304]' : 'text-white/55 hover:text-white')}
+            className={cn('relative flex-1 whitespace-nowrap rounded-xl px-3 py-2 text-[13px] font-medium transition', active ? 'text-[#0d1403]' : 'text-white/55 hover:text-white')}
           >
-            {active && <motion.span layoutId={`seg-${options.map((x) => x.value).join('')}`} className="absolute inset-0 rounded-xl bg-[linear-gradient(135deg,#f5e3a0,#d4af37_55%,#a67c1b)]" transition={{ type: 'spring', stiffness: 400, damping: 34 }} />}
+            {active && <motion.span layoutId={`seg-${options.map((x) => x.value).join('')}`} className="absolute inset-0 rounded-xl bg-[linear-gradient(135deg,#e4fb8c,#c6f432_55%,#8fbf1a)]" transition={{ type: 'spring', stiffness: 400, damping: 34 }} />}
             <span className="relative">{o.label}</span>
           </button>
         );
@@ -134,7 +134,7 @@ export function ConfirmDialog({
       {text && <div className="text-[15px] leading-relaxed text-white/65">{text}</div>}
       <div className="mt-6 grid grid-cols-2 gap-3">
         <Button variant="dark" onClick={() => onOpenChange(false)}>Отмена</Button>
-        <Button variant={danger ? 'danger' : 'gold'} loading={loading} onClick={onConfirm}>{confirmLabel}</Button>
+        <Button variant={danger ? 'danger' : 'primary'} loading={loading} onClick={onConfirm}>{confirmLabel}</Button>
       </div>
     </Modal>
   );
@@ -145,7 +145,7 @@ export function PageTitle({ eyebrow, title, right }: { eyebrow?: string; title: 
     <div className="mb-5 flex items-end justify-between gap-3">
       <div>
         {eyebrow && <p className="eyebrow mb-1">{eyebrow}</p>}
-        <h1 className="h-display text-[34px] leading-none text-white md:text-4xl">{title}</h1>
+        <h1 className="h-display text-[28px] leading-none text-white md:text-4xl">{title}</h1>
       </div>
       {right}
     </div>

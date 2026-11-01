@@ -26,7 +26,7 @@ export default function SupportPage() {
 
   return (
     <>
-      <PageTitle eyebrow="Мы на связи" title="Поддержка" right={<Button size="sm" onClick={() => setOpen(true)}>Новое</Button>} />
+      <PageTitle title="Поддержка" right={<Button size="sm" onClick={() => setOpen(true)}>Новое</Button>} />
       {q.isError ? <ErrorState onRetry={() => q.refetch()} /> : q.isLoading ? <Skeleton className="h-40" /> : !q.data?.threads.length ? (
         <EmptyState icon={<IconSupport size={44} />} title="Обращений нет" text="Есть вопрос или нашли ошибку? Напишите — мы ответим прямо здесь." action={<Button onClick={() => setOpen(true)}>Написать</Button>} />
       ) : (

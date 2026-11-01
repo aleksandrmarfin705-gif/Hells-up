@@ -71,17 +71,17 @@ export default function CasePage() {
       <Link href="/cases" className="mb-3 inline-flex items-center gap-1 text-sm text-white/50 hover:text-white"><IconBack size={18} />Все кейсы</Link>
       {!c ? <Skeleton className="h-80 w-full" /> : (
         <>
-          <section className="relative overflow-hidden rounded-[1.75rem] border border-gold-400/20 p-6 text-center" style={{ background: `radial-gradient(70% 70% at 50% 25%, ${c.accent}33, transparent 70%), linear-gradient(180deg,#111113,#060607)` }}>
-            <div className="animate-floaty"><CaseArt art={c.art} accent={c.accent} imageUrl={c.image_url} size={180} className="mx-auto" /></div>
+          <section className="relative overflow-hidden rounded-3xl border border-white/10 p-6 text-center" style={{ background: 'radial-gradient(70% 70% at 50% 25%, rgba(198,244,50,.12), transparent 70%), linear-gradient(180deg,#16181c,#0e0f12)' }}>
+            <div className="animate-floaty"><CaseArt art={c.art} imageUrl={c.image_url} size={180} className="mx-auto" /></div>
             <h1 className="h-display mt-2 text-[42px] leading-none text-white">{c.name}</h1>
             <p className="mx-auto mt-2 max-w-sm text-sm text-white/55">{c.description}</p>
             <Button size="lg" full className="mx-auto mt-6 max-w-sm" loading={open.isPending} disabled={!enough || !me?.settings.cases_enabled} onClick={() => open.mutate(undefined)}>
-              {!me?.settings.cases_enabled ? 'Кейсы отключены' : enough ? <>Открыть за <Money value={c.price} size={17} className="text-[#1a1304]" /></> : 'Недостаточно монет'}
+              {!me?.settings.cases_enabled ? 'Кейсы отключены' : enough ? <>Открыть за <Money value={c.price} size={17} className="text-[#0d1403]" /></> : 'Недостаточно монет'}
             </Button>
             {!enough && <p className="mt-3 text-xs text-white/40">Пополните демо-баланс кнопкой «+» вверху.</p>}
           </section>
 
-          <h2 className="h-display mb-3 mt-8 text-[28px] text-white">Содержимое кейса</h2>
+          <h2 className="h-display mb-3 mt-8 text-[20px] text-white">Содержимое кейса</h2>
           <ul className="panel divide-y divide-white/5 overflow-hidden">
             {c.items.map((it) => {
               const r = rarityOf(it.rarity);
@@ -94,7 +94,7 @@ export default function CasePage() {
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-semibold tabular-nums text-white">{fmtPct(it.chance)}</p>
-                    <Money value={it.virtual_price} size={12} className="text-xs text-gold-200/80" />
+                    <Money value={it.virtual_price} size={12} className="text-xs text-lime-200/80" />
                   </div>
                 </li>
               );
@@ -119,8 +119,8 @@ export default function CasePage() {
             <div className="mt-6 grid gap-2.5">
               <Button size="lg" onClick={() => close(true)} disabled={balance < (c?.price ?? 0)}>Открыть ещё</Button>
               <div className="grid grid-cols-2 gap-2.5">
-                <Button variant="dark" loading={sell.isPending} onClick={() => sell.mutate(result.user_item_id)}>Продать за {fmt(result.item.virtual_price)}</Button>
-                <Button variant="dark" onClick={() => router.push('/inventory')}>В инвентарь</Button>
+                <Button variant="dark" className="whitespace-nowrap px-3 text-[14px]" loading={sell.isPending} onClick={() => sell.mutate(result.user_item_id)}>Продать · {fmt(result.item.virtual_price)}</Button>
+                <Button variant="dark" onClick={() => router.push('/inventory')}>К предметам</Button>
               </div>
             </div>
             <p className="mt-4 break-all text-center text-[10px] leading-relaxed text-white/30">

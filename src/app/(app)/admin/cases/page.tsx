@@ -13,7 +13,7 @@ import { fmtPct } from '@/lib/format';
 import type { Item } from '@/lib/types';
 
 type AdminCase = { id: string; name: string; description: string; price: number; accent: string; art: string; image_url: string | null; is_active: boolean; is_featured: boolean; sort_order: number; item_count: number; expected_value: number; rtp: number | null };
-const empty = { name: '', description: '', price: '100', accent: '#d4af37', art: 'chest', image_url: '', is_active: true, is_featured: false, sort_order: '0' };
+const empty = { name: '', description: '', price: '100', accent: '#c6f432', art: 'chest', image_url: '', is_active: true, is_featured: false, sort_order: '0' };
 
 export default function AdminCases() {
   const qc = useQueryClient();
@@ -39,11 +39,11 @@ export default function AdminCases() {
         <ul className="space-y-3">
           {q.data?.cases.map((c) => (
             <li key={c.id} className={`panel flex items-center gap-3 p-3 ${c.is_active ? '' : 'opacity-50'}`}>
-              <CaseArt art={c.art} accent={c.accent} imageUrl={c.image_url} size={64} />
+              <CaseArt art={c.art} imageUrl={c.image_url} size={64} />
               <div className="min-w-0 flex-1">
-                <p className="truncate font-semibold text-white">{c.name} {c.is_featured && <span className="text-[10px] text-gold-300">★</span>}</p>
+                <p className="truncate font-semibold text-white">{c.name} {c.is_featured && <span className="text-[10px] text-lime-300">★</span>}</p>
                 <p className="text-xs text-white/40">{c.item_count} предметов · EV {c.expected_value} {c.rtp != null && <span className={c.rtp > 1 ? 'text-rarity-mythic' : 'text-emerald-400'}>· возврат {fmtPct(c.rtp)}</span>}</p>
-                <Money value={Number(c.price)} size={12} className="text-sm text-gold-200" />
+                <Money value={Number(c.price)} size={12} className="text-sm text-lime-200" />
               </div>
               <div className="flex flex-col gap-1.5">
                 <Button size="sm" variant="dark" onClick={() => setComp(c)}>Состав</Button>
@@ -70,8 +70,8 @@ export default function AdminCases() {
             </div>
             <input className="input" placeholder="Ссылка на изображение (https, необязательно)" value={edit.image_url} onChange={(e) => setEdit({ ...edit, image_url: e.target.value.trim() })} />
             <div className="flex gap-5 text-sm text-white/70">
-              <label className="flex items-center gap-2"><input type="checkbox" checked={edit.is_active} onChange={(e) => setEdit({ ...edit, is_active: e.target.checked })} className="h-4 w-4 accent-[#d4af37]" />Активен</label>
-              <label className="flex items-center gap-2"><input type="checkbox" checked={edit.is_featured} onChange={(e) => setEdit({ ...edit, is_featured: e.target.checked })} className="h-4 w-4 accent-[#d4af37]" />Популярный</label>
+              <label className="flex items-center gap-2"><input type="checkbox" checked={edit.is_active} onChange={(e) => setEdit({ ...edit, is_active: e.target.checked })} className="h-4 w-4 accent-[#c6f432]" />Активен</label>
+              <label className="flex items-center gap-2"><input type="checkbox" checked={edit.is_featured} onChange={(e) => setEdit({ ...edit, is_featured: e.target.checked })} className="h-4 w-4 accent-[#c6f432]" />Популярный</label>
             </div>
             <Button full size="lg" loading={save.isPending} disabled={!edit.name.trim()} onClick={() => save.mutate(undefined)}>Сохранить</Button>
           </div>
@@ -108,7 +108,7 @@ function Composition({ c, onClose, onSaved }: { c: AdminCase; onClose: () => voi
             {Object.entries(current).sort(([a], [b]) => Number(byId.get(b)?.virtual_price ?? 0) - Number(byId.get(a)?.virtual_price ?? 0)).map(([id, w]) => (
               <li key={id} className="flex items-center gap-2 px-3 py-2">
                 <div className="min-w-0 flex-1"><p className="truncate text-sm text-white">{byId.get(id)?.name ?? id}</p><p className="text-[11px] text-white/35">{byId.get(id)?.virtual_price} монет · {fmtPct(total ? (w || 0) / total : 0)}</p></div>
-                <input inputMode="numeric" className="h-9 w-28 rounded-lg border border-white/10 bg-surface-2 px-2 text-right text-[16px] text-white outline-none focus:border-gold-400" value={w || ''} onChange={(e) => setRows({ ...current, [id]: Math.min(2_000_000_000, Number(e.target.value.replace(/\D/g, '')) || 0) })} />
+                <input inputMode="numeric" className="h-9 w-28 rounded-lg border border-white/10 bg-surface-2 px-2 text-right text-[16px] text-white outline-none focus:border-lime-400" value={w || ''} onChange={(e) => setRows({ ...current, [id]: Math.min(2_000_000_000, Number(e.target.value.replace(/\D/g, '')) || 0) })} />
                 <button className="p-1 text-white/40 hover:text-rarity-mythic" aria-label="Убрать" onClick={() => { const n = { ...current }; delete n[id]; setRows(n); }}><IconTrash size={16} /></button>
               </li>
             ))}
@@ -120,7 +120,7 @@ function Composition({ c, onClose, onSaved }: { c: AdminCase; onClose: () => voi
             </select>
             <Button variant="dark" disabled={!add} onClick={() => { setRows({ ...current, [add]: 1000 }); setAdd(''); }}>+</Button>
           </div>
-          <p className="mt-3 text-xs text-white/45">Ожидаемая стоимость выпадения: <b className="text-gold-200">{Math.round(ev)}</b>{c.price > 0 && ev > 0 && <> · возврат {fmtPct(ev / c.price)} от цены {c.price}</>}</p>
+          <p className="mt-3 text-xs text-white/45">Ожидаемая стоимость выпадения: <b className="text-lime-200">{Math.round(ev)}</b>{c.price > 0 && ev > 0 && <> · возврат {fmtPct(ev / c.price)} от цены {c.price}</>}</p>
           <div className="mt-4 grid grid-cols-2 gap-3">
             <Button variant="dark" onClick={auto}>Авто-веса (1/цена)</Button>
             <Button loading={save.isPending} disabled={!Object.values(current).some((w) => w > 0)} onClick={() => save.mutate(undefined)}>Сохранить</Button>

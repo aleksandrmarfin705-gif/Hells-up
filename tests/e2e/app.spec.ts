@@ -80,11 +80,12 @@ test.describe('сценарии', () => {
     if (isMobile) {
       const nav = page.getByRole('navigation', { name: 'Основная навигация' });
       await expect(nav.getByText('Главная')).toBeVisible();
-      for (const label of ['Кейсы', 'Upgrade', 'Игры', 'Профиль']) await expect(nav.getByText(label)).toBeVisible();
-      await nav.getByText('Игры').click();
-      await expect(page).toHaveURL(/\/games$/);
+      for (const label of ['Кейсы', 'Предметы', 'Профиль']) await expect(nav.getByText(label)).toBeVisible();
+      await nav.getByText('Предметы').click();
+      await expect(page).toHaveURL(/\/inventory$/);
     } else {
-      await expect(page.locator('aside').getByText('Инвентарь')).toBeVisible();
+      await expect(page.locator('aside').getByText('Предметы')).toBeVisible();
+      await expect(page.locator('aside').getByText('Upgrade')).toBeVisible();
       await expect(page.getByRole('navigation', { name: 'Основная навигация' })).toBeHidden();
     }
   });

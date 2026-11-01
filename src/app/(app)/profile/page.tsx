@@ -30,27 +30,27 @@ export default function ProfilePage() {
 
   return (
     <>
-      <PageTitle eyebrow="Аккаунт" title="Профиль" />
-      <section className="panel relative overflow-hidden p-5" style={{ background: 'radial-gradient(80% 100% at 100% 0%, rgba(212,175,55,.14), transparent 60%), linear-gradient(180deg,#141416,#09090a)' }}>
+      <PageTitle title="Профиль" />
+      <section className="panel relative overflow-hidden p-5" style={{ background: 'radial-gradient(80% 100% at 100% 0%, rgba(198,244,50,.14), transparent 60%), linear-gradient(180deg,#141416,#09090a)' }}>
         <div className="flex items-center gap-4">
           {u?.photo_url ? (
-            <img src={u.photo_url} alt="" className="h-20 w-20 rounded-full border-2 border-gold-400/50 object-cover" referrerPolicy="no-referrer" />
+            <img src={u.photo_url} alt="" className="h-20 w-20 rounded-full border-2 border-lime-400/50 object-cover" referrerPolicy="no-referrer" />
           ) : (
-            <span className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-gold-400/50 bg-surface-3 h-display text-4xl text-gold-200">{name.slice(0, 1).toUpperCase() || 'H'}</span>
+            <span className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-lime-400/50 bg-surface-3 h-display text-4xl text-lime-200">{name.slice(0, 1).toUpperCase() || 'H'}</span>
           )}
           <div className="min-w-0">
             <p className="h-display truncate text-3xl leading-tight text-white">{name || '…'}</p>
-            {u?.username && <p className="text-sm text-gold-300/80">@{u.username}</p>}
+            {u?.username && <p className="text-sm text-lime-300/80">@{u.username}</p>}
             <p className="mt-0.5 text-xs text-white/40">В игре с {fmtDay(u?.created_at)}</p>
           </div>
         </div>
-        <div className="mt-5 rounded-2xl border border-gold-400/20 bg-black/40 px-4 py-3.5">
+        <div className="mt-5 rounded-2xl border border-white/10 bg-black/40 px-4 py-3.5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-white/40">Виртуальный баланс</p>
-          <Money value={u?.balance ?? 0} size={26} className="gold-text mt-1 text-[32px]" />
+          <Money value={u?.balance ?? 0} size={26} className="accent-text mt-1 text-[32px]" />
         </div>
       </section>
 
-      <h2 className="h-display mb-3 mt-8 text-[26px] text-white">Статистика</h2>
+      <h2 className="h-display mb-3 mt-8 text-[20px] text-white">Статистика</h2>
       {!s ? <div className="grid grid-cols-2 gap-3">{Array.from({ length: 6 }, (_, i) => <Skeleton key={i} className="h-20" />)}</div> : (
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
           <Stat label="Открыто кейсов" value={fmt(s.cases_opened)} />
@@ -64,10 +64,10 @@ export default function ProfilePage() {
         </div>
       )}
 
-      <h2 className="h-display mb-3 mt-8 text-[26px] text-white">Разделы</h2>
+      <h2 className="h-display mb-3 mt-8 text-[20px] text-white">Разделы</h2>
       <ul className="panel divide-y divide-white/5 overflow-hidden">
         {links.map(({ href, label, Icon }) => (
-          <li key={href}><Link href={href} className="flex items-center gap-3 px-4 py-4 text-[15px] text-white/85 transition hover:bg-white/5"><span className="text-gold-300"><Icon size={22} /></span><span className="flex-1">{label}</span><IconChevron size={18} className="text-white/30" /></Link></li>
+          <li key={href}><Link href={href} className="flex items-center gap-3 px-4 py-4 text-[15px] text-white/85 transition hover:bg-white/5"><span className="text-lime-300"><Icon size={22} /></span><span className="flex-1">{label}</span><IconChevron size={18} className="text-white/30" /></Link></li>
         ))}
       </ul>
       <p className="mt-6 text-center text-[11px] leading-relaxed text-white/30">HELLS UP — демо-приложение. Монеты и предметы виртуальные, вывод и обмен невозможны.</p>

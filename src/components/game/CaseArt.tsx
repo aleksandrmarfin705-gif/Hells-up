@@ -1,49 +1,44 @@
 import { useId } from 'react';
 import { cn } from '@/lib/cn';
 
+const ACCENT = '#c6f432'; // единый акцент; индивидуальные цвета кейсов не используются
+
+/** Минималистичный контейнер: графит + лаймовая линия света. Эмблема зависит от `art`. */
 export function CaseArt({
-  art = 'chest', accent = '#d4af37', imageUrl, size = 140, className, open = false,
+  art = 'chest', imageUrl, size = 140, className, open = false,
 }: { art?: string; accent?: string; imageUrl?: string | null; size?: number; className?: string; open?: boolean }) {
   const id = useId().replace(/:/g, '');
   if (imageUrl) {
     return <img src={imageUrl} alt="" width={size} height={size} className={cn('object-contain', className)} style={{ width: size, height: size }} loading="lazy" referrerPolicy="no-referrer" />;
   }
   return (
-    <svg width={size} height={size} viewBox="0 0 120 120" className={className} aria-hidden style={{ filter: `drop-shadow(0 10px 22px ${accent}40)` }}>
+    <svg width={size} height={size} viewBox="0 0 120 120" className={className} aria-hidden style={{ filter: 'drop-shadow(0 10px 20px rgba(198,244,50,.12))' }}>
       <defs>
         <linearGradient id={`b${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#222228" /><stop offset="1" stopColor="#0b0b0d" />
+          <stop offset="0" stopColor="#2a2e36" /><stop offset="1" stopColor="#14161a" />
         </linearGradient>
         <linearGradient id={`l${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#2d2d34" /><stop offset="1" stopColor="#15151a" />
-        </linearGradient>
-        <linearGradient id={`t${id}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor={accent} /><stop offset="1" stopColor={accent} stopOpacity=".45" />
+          <stop offset="0" stopColor="#343944" /><stop offset="1" stopColor="#1d2026" />
         </linearGradient>
         <radialGradient id={`g${id}`} cx=".5" cy=".5" r=".5">
-          <stop offset="0" stopColor={accent} stopOpacity=".55" /><stop offset="1" stopColor={accent} stopOpacity="0" />
+          <stop offset="0" stopColor={ACCENT} stopOpacity=".35" /><stop offset="1" stopColor={ACCENT} stopOpacity="0" />
         </radialGradient>
       </defs>
-      <ellipse cx="60" cy="104" rx="42" ry="8" fill={`url(#g${id})`} />
-      {/* свет из щели крышки */}
-      <path d="M22 54h76" stroke={accent} strokeWidth={open ? 5 : 2} strokeLinecap="round" opacity={open ? 0.95 : 0.7} />
+      <ellipse cx="60" cy="105" rx="40" ry="7" fill={`url(#g${id})`} />
       {/* корпус */}
-      <path d="M18 54h84v42a6 6 0 0 1-6 6H24a6 6 0 0 1-6-6Z" fill={`url(#b${id})`} stroke={`url(#t${id})`} strokeWidth="1.4" />
+      <rect x="20" y="50" width="80" height="52" rx="12" fill={`url(#b${id})`} stroke="rgba(255,255,255,.1)" />
+      {/* линия света */}
+      <rect x="24" y="52" width="72" height={open ? 5 : 2.4} rx="1.4" fill={ACCENT} opacity={open ? 0.95 : 0.85} />
       {/* крышка */}
-      <g transform={open ? 'translate(0 -6) rotate(-4 60 52)' : undefined}>
-        <path d="M18 54C18 30 34 20 60 20s42 10 42 34Z" fill={`url(#l${id})`} stroke={`url(#t${id})`} strokeWidth="1.4" />
-        <path d="M30 52C32 38 42 30 60 30" stroke="#fff" strokeOpacity=".07" strokeWidth="3" fill="none" strokeLinecap="round" />
+      <g transform={open ? 'translate(0 -7) rotate(-3 60 48)' : undefined}>
+        <rect x="20" y="22" width="80" height="29" rx="11" fill={`url(#l${id})`} stroke="rgba(255,255,255,.12)" />
+        <path d="M30 31h26" stroke="#fff" strokeOpacity=".1" strokeWidth="3" strokeLinecap="round" />
       </g>
-      {/* металлические полосы */}
-      <rect x="50" y="22" width="20" height="80" rx="2" fill={`url(#t${id})`} opacity=".9" />
-      <rect x="18" y="66" width="84" height="3" fill={accent} opacity=".35" />
-      {/* замок */}
-      <rect x="53" y="58" width="14" height="16" rx="3" fill="#0a0a0a" stroke={accent} strokeWidth="1.4" />
-      <circle cx="60" cy="65" r="2.4" fill={accent} />
       {/* эмблема */}
-      {art === 'flame' && <path d="M60 4c2 7 11 11 11 21 0 7-5 12-11 12s-11-5-11-12c0-5 3-7 5-11 2 3 3 4 5 5-1-5-1-10 1-15Z" fill={accent} opacity=".95" transform="translate(0 -2)" />}
-      {art === 'crown' && <path d="M44 28 47 8l7 8 6-12 6 12 7-8 3 20Z" fill={accent} transform="translate(0 -2)" />}
-      {art === 'relic' && <path d="M60 3l10 12-10 15-10-15Z" fill={accent} transform="translate(0 -1)" />}
+      {art === 'flame' && <path d="M60 64c2.2 5 8.5 7.6 8.5 14.2 0 5-3.8 8.6-8.5 8.6s-8.5-3.6-8.5-8.6c0-4 2.4-5.6 4-8.6 1.4 2 2.4 2.8 4 3.4-.6-3.4-.6-6.6.5-9Z" fill={ACCENT} />}
+      {art === 'crown' && <path d="M62 62 51 77h8l-2 11 12-16h-8Z" fill={ACCENT} />}
+      {art === 'relic' && <path d="M60 62l11 13-11 13-11-13Z" fill="none" stroke={ACCENT} strokeWidth="3" strokeLinejoin="round" />}
+      {art === 'chest' && <rect x="52" y="68" width="16" height="16" rx="4" fill="none" stroke={ACCENT} strokeWidth="3" />}
     </svg>
   );
 }

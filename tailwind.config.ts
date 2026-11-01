@@ -13,12 +13,12 @@ const config: Config = {
         ember: '#e2552b',
       },
       fontFamily: {
-        display: ['"Cormorant Garamond"', 'Georgia', '"Times New Roman"', 'serif'],
+        display: ['"Space Grotesk"', 'Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
       },
       boxShadow: {
-        gold: '0 0 0 1px rgba(212,175,55,0.35), 0 8px 32px -8px rgba(212,175,55,0.35)',
-        card: '0 1px 0 0 rgba(255,255,255,0.04) inset, 0 12px 40px -16px rgba(0,0,0,0.9)',
+        pop: '0 0 0 1px rgba(198,244,50,0.35), 0 10px 30px -12px rgba(198,244,50,0.35)',
+        card: '0 1px 0 0 rgba(255,255,255,0.04) inset, 0 14px 36px -18px rgba(0,0,0,0.85)',
       },
       keyframes: {
         shimmer: { '100%': { transform: 'translateX(100%)' } },

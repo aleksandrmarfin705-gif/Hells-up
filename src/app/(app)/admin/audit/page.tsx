@@ -15,7 +15,7 @@ export default function AdminAudit() {
         <ul className="panel divide-y divide-white/5 overflow-hidden">
           {q.data?.rows.map((r) => (
             <li key={r.id} className="px-4 py-3">
-              <div className="flex items-center justify-between gap-3"><span className="font-mono text-[13px] text-gold-200">{r.action}</span><span className="text-xs text-white/35">{fmtDate(r.created_at)}</span></div>
+              <div className="flex items-center justify-between gap-3"><span className="font-mono text-[13px] text-lime-200">{r.action}</span><span className="text-xs text-white/35">{fmtDate(r.created_at)}</span></div>
               <p className="mt-0.5 text-xs text-white/45">админ {r.actor_telegram_id} · {r.target_type ?? ''} {r.target_id ? String(r.target_id).slice(0, 8) : ''}</p>
               {r.diff && Object.keys(r.diff).length > 0 && <p className="mt-1 break-all font-mono text-[11px] text-white/30">{JSON.stringify(r.diff).slice(0, 220)}</p>}
             </li>

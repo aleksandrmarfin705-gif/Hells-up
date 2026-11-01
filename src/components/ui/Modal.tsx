@@ -23,7 +23,7 @@ export function Modal({
             <Dialog.Content asChild forceMount aria-describedby={description ? undefined : undefined}
               onPointerDownOutside={(e) => !dismissible && e.preventDefault()} onEscapeKeyDown={(e) => !dismissible && e.preventDefault()}>
               <motion.div
-                className={cn('fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[92dvh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-gold-400/20 bg-surface p-5 shadow-gold md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:rounded-3xl', className)}
+                className={cn('fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[92dvh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-white/10 bg-surface p-5 shadow-pop md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:rounded-3xl', className)}
                 style={{ paddingBottom: 'calc(var(--safe-bottom) + 1.25rem)' }}
                 initial={{ y: 60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 60, opacity: 0 }}
                 transition={{ type: 'spring', stiffness: 340, damping: 32 }}

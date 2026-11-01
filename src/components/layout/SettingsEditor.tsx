@@ -25,7 +25,7 @@ export function SettingsEditor({ fields, title }: { fields: Field[]; title?: str
           {f.type === 'bool' ? (
             <label className="flex items-center justify-between gap-3 py-1">
               <span className="text-sm text-white/80">{f.label}</span>
-              <input type="checkbox" className="h-5 w-5 accent-[#d4af37]" checked={!!val(f.key)} onChange={(e) => setDraft({ ...draft, [f.key]: e.target.checked })} />
+              <input type="checkbox" className="h-5 w-5 accent-[#c6f432]" checked={!!val(f.key)} onChange={(e) => setDraft({ ...draft, [f.key]: e.target.checked })} />
             </label>
           ) : (
             <>

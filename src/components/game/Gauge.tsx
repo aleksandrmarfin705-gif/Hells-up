@@ -9,7 +9,7 @@ export type GaugeHandle = { spinTo: (roll: number) => Promise<void> };
  * Стрелка останавливается на значении roll, которое вернул сервер: попадание в дугу = успех.
  */
 export const Gauge = forwardRef<GaugeHandle, { chance: number; color?: string; children?: ReactNode; size?: number }>(function Gauge(
-  { chance, color = '#d4af37', children, size = 260 }, ref,
+  { chance, color = '#c6f432', children, size = 260 }, ref,
 ) {
   const R = 108;
   const C = 2 * Math.PI * R;
@@ -31,8 +31,8 @@ export const Gauge = forwardRef<GaugeHandle, { chance: number; color?: string; c
           <filter id="gaugeGlow"><feGaussianBlur stdDeviation="4" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
         </defs>
         <circle cx="130" cy="130" r={R} fill="none" stroke="#17171b" strokeWidth="16" />
-        <circle cx="130" cy="130" r={R + 14} fill="none" stroke="rgba(212,175,55,.12)" strokeWidth="1" />
-        <circle cx="130" cy="130" r={R - 14} fill="none" stroke="rgba(212,175,55,.08)" strokeWidth="1" />
+        <circle cx="130" cy="130" r={R + 14} fill="none" stroke="rgba(198,244,50,.12)" strokeWidth="1" />
+        <circle cx="130" cy="130" r={R - 14} fill="none" stroke="rgba(198,244,50,.08)" strokeWidth="1" />
         <circle
           cx="130" cy="130" r={R} fill="none" stroke={color} strokeWidth="16" strokeLinecap="butt"
           strokeDasharray={`${Math.max(0.0001, chance) * C} ${C}`} transform="rotate(-90 130 130)" filter="url(#gaugeGlow)"
@@ -44,7 +44,7 @@ export const Gauge = forwardRef<GaugeHandle, { chance: number; color?: string; c
       </svg>
       <motion.div className="absolute inset-0" animate={controls} initial={{ rotate: 0 }}>
         <svg viewBox="0 0 260 260" width={size} height={size}>
-          <path d="M130 8 118 34h24Z" fill="#fff" stroke="#d4af37" strokeWidth="1.5" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 6px rgba(255,255,255,.8))' }} />
+          <path d="M130 8 118 34h24Z" fill="#fff" stroke="#c6f432" strokeWidth="1.5" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 6px rgba(255,255,255,.8))' }} />
           <line x1="130" y1="34" x2="130" y2="64" stroke="#fff" strokeOpacity=".7" strokeWidth="2.5" strokeLinecap="round" />
         </svg>
       </motion.div>

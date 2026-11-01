@@ -97,21 +97,21 @@ export default function RoulettePage() {
   return (
     <>
       <div className="mb-4 flex items-end justify-between">
-        <div><p className="eyebrow mb-1">Общий стол · демо</p><h1 className="h-display text-[34px] leading-none text-white">Рулетка</h1></div>
-        {s && <div className="text-right"><p className="text-[11px] uppercase tracking-widest text-white/40">Раунд</p><p className="h-display gold-text text-3xl leading-none">№{s.round.round_no}</p></div>}
+        <div><p className="eyebrow mb-1">Общий стол · демо</p><h1 className="h-display text-[28px] leading-none text-white">Рулетка</h1></div>
+        {s && <div className="text-right"><p className="text-[11px] uppercase tracking-widest text-white/40">Раунд</p><p className="h-display accent-text text-3xl leading-none">№{s.round.round_no}</p></div>}
       </div>
 
       {!s ? <Skeleton className="h-96" /> : (
         <>
           <section className="panel relative overflow-hidden px-3 pb-5 pt-6">
-            <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(60% 50% at 50% 38%, rgba(212,175,55,.12), transparent 70%)' }} />
+            <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(60% 50% at 50% 38%, rgba(198,244,50,.12), transparent 70%)' }} />
             <div className="relative mx-auto flex w-fit"><RouletteWheel angle={angle} spinning={spinning} size={Math.min(300, typeof window !== 'undefined' ? window.innerWidth - 70 : 280)} /></div>
             <div className="relative mt-5 px-2">
               <div className="mb-1.5 flex items-center justify-between text-xs">
                 <span className="text-white/45">{closed ? 'Ставки закрыты' : 'Приём ставок'}</span>
-                <span className={cn('font-semibold tabular-nums', secs <= 5 ? 'text-rarity-mythic' : 'text-gold-200')}>{closed ? 'вращение…' : `${secs} с`}</span>
+                <span className={cn('font-semibold tabular-nums', secs <= 5 ? 'text-rarity-mythic' : 'text-lime-200')}>{closed ? 'вращение…' : `${secs} с`}</span>
               </div>
-              <div className="h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-[linear-gradient(90deg,#8f6f1f,#f5e3a0)] transition-[width] duration-200" style={{ width: `${Math.max(0, Math.min(100, (left / total) * 100))}%` }} /></div>
+              <div className="h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-[linear-gradient(90deg,#6f9a12,#e4fb8c)] transition-[width] duration-200" style={{ width: `${Math.max(0, Math.min(100, (left / total) * 100))}%` }} /></div>
             </div>
             <div className="relative mt-4 flex items-center justify-center gap-1.5">
               {s.last.slice(0, 12).map((l) => (
@@ -129,12 +129,12 @@ export default function RoulettePage() {
                 <div className="scroll-x">
                   {CHIPS.map((c) => (
                     <button key={c} onClick={() => { setChip(c); setCustom(''); haptic.select(); }}
-                      className={cn('flex h-12 min-w-[3.4rem] items-center justify-center rounded-full border-2 px-3 text-sm font-bold tabular-nums transition active:scale-90', !custom && chip === c ? 'border-gold-300 bg-gold-400/20 text-gold-100 shadow-[0_0_18px_-2px_rgba(212,175,55,.6)]' : 'border-white/15 text-white/60')}>{c}</button>
+                      className={cn('flex h-12 min-w-[3.4rem] items-center justify-center rounded-full border-2 px-3 text-sm font-bold tabular-nums transition active:scale-90', !custom && chip === c ? 'border-lime-300 bg-lime-400/20 text-lime-100 shadow-[0_0_18px_-2px_rgba(198,244,50,.6)]' : 'border-white/15 text-white/60')}>{c}</button>
                   ))}
                   <input inputMode="numeric" placeholder="Своя" value={custom} onChange={(e) => setCustom(e.target.value.replace(/\D/g, '').slice(0, 9))}
-                    className="h-12 w-24 flex-none rounded-full border-2 border-white/15 bg-transparent px-4 text-center text-[16px] font-bold text-white outline-none focus:border-gold-400" />
+                    className="h-12 w-24 flex-none rounded-full border-2 border-white/15 bg-transparent px-4 text-center text-[16px] font-bold text-white outline-none focus:border-lime-400" />
                 </div>
-                <p className="mt-2 text-xs text-white/35">Ставка: <Money value={amount} size={12} className="text-gold-200" /> · нажмите на поле, чтобы поставить · лимит {me?.settings.roulette_min_bet}–{me?.settings.roulette_max_bet}</p>
+                <p className="mt-2 text-xs text-white/35">Ставка: <Money value={amount} size={12} className="text-lime-200" /> · нажмите на поле, чтобы поставить · лимит {me?.settings.roulette_min_bet}–{me?.settings.roulette_max_bet}</p>
               </div>
 
               <div className="mt-4 grid grid-cols-6 gap-1.5">
@@ -155,9 +155,9 @@ export default function RoulettePage() {
                 <ul className="panel max-h-72 divide-y divide-white/5 overflow-y-auto">
                   {s.bets.map((b) => (
                     <li key={b.id} className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm">
-                      <span className={cn('truncate', b.mine ? 'font-semibold text-gold-200' : 'text-white/70')}>{b.mine ? 'Вы' : b.display_name}</span>
+                      <span className={cn('truncate', b.mine ? 'font-semibold text-lime-200' : 'text-white/70')}>{b.mine ? 'Вы' : b.display_name}</span>
                       <span className="flex-1 truncate text-right text-white/45">{betTitle(b)}</span>
-                      <Money value={b.amount} size={12} className="w-20 justify-end text-gold-200/90" />
+                      <Money value={b.amount} size={12} className="w-20 justify-end text-lime-200/90" />
                     </li>
                   ))}
                 </ul>
@@ -187,7 +187,7 @@ export default function RoulettePage() {
 }
 
 function Stake({ v }: { v: number }) {
-  return <span className="absolute -right-1 -top-1.5 rounded-full bg-gold-300 px-1.5 text-[10px] font-bold leading-4 text-[#1a1304] shadow">{v >= 1000 ? `${Math.round(v / 100) / 10}k` : v}</span>;
+  return <span className="absolute -right-1 -top-1.5 rounded-full bg-lime-300 px-1.5 text-[10px] font-bold leading-4 text-[#0d1403] shadow">{v >= 1000 ? `${Math.round(v / 100) / 10}k` : v}</span>;
 }
 
 function NumCell({ n, onClick, stake, wide }: { n: number; onClick: () => void; stake: number; wide?: boolean }) {

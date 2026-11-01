@@ -20,7 +20,7 @@ export function RouletteWheel({ angle, size = 280, spinning }: { angle: number; 
     <div className="relative" style={{ width: size, height: size }}>
       <svg viewBox="0 0 260 260" width={size} height={size} className="absolute inset-0 overflow-visible">
         <defs>
-          <radialGradient id="rimGrad" cx=".5" cy=".5" r=".5"><stop offset=".9" stopColor="#8f6f1f" /><stop offset="1" stopColor="#f5e3a0" /></radialGradient>
+          <radialGradient id="rimGrad" cx=".5" cy=".5" r=".5"><stop offset=".9" stopColor="#6f9a12" /><stop offset="1" stopColor="#e4fb8c" /></radialGradient>
         </defs>
         <circle cx="130" cy="130" r="128" fill="url(#rimGrad)" />
         <circle cx="130" cy="130" r="122" fill="#050505" />
@@ -28,17 +28,17 @@ export function RouletteWheel({ angle, size = 280, spinning }: { angle: number; 
       <motion.svg viewBox="0 0 260 260" width={size} height={size} className="absolute inset-0" animate={{ rotate: angle }} transition={spinning ? { duration: 6, ease: [0.12, 0.72, 0.1, 1] } : { duration: 0 }}>
         {WHEEL_ORDER.map((n, i) => (
           <g key={n}>
-            <path d={sector(i, 96, 120)} fill={FILL[colorOf(n)]} stroke="#d4af37" strokeOpacity=".35" strokeWidth=".6" />
+            <path d={sector(i, 96, 120)} fill={FILL[colorOf(n)]} stroke="#c6f432" strokeOpacity=".35" strokeWidth=".6" />
             <text x="130" y="30" fill="#f4ecd2" fontSize="9" fontWeight="700" textAnchor="middle" transform={`rotate(${i * STEP + STEP / 2} 130 130)`}>{n}</text>
           </g>
         ))}
-        <circle cx="130" cy="130" r="94" fill="#0a0a0b" stroke="#d4af37" strokeOpacity=".4" />
-        <circle cx="130" cy="130" r="58" fill="#121214" stroke="#d4af37" strokeOpacity=".25" />
-        <circle cx="130" cy="130" r="12" fill="#d4af37" />
-        {[0, 90, 180, 270].map((a) => <rect key={a} x="127" y="74" width="6" height="22" rx="3" fill="#d4af37" fillOpacity=".7" transform={`rotate(${a} 130 130)`} />)}
+        <circle cx="130" cy="130" r="94" fill="#0a0a0b" stroke="#c6f432" strokeOpacity=".4" />
+        <circle cx="130" cy="130" r="58" fill="#121214" stroke="#c6f432" strokeOpacity=".25" />
+        <circle cx="130" cy="130" r="12" fill="#c6f432" />
+        {[0, 90, 180, 270].map((a) => <rect key={a} x="127" y="74" width="6" height="22" rx="3" fill="#c6f432" fillOpacity=".7" transform={`rotate(${a} 130 130)`} />)}
       </motion.svg>
       <svg viewBox="0 0 260 260" width={size} height={size} className="pointer-events-none absolute inset-0">
-        <path d="M130 8 120 -4h20Z" transform="translate(0 6)" fill="#fff" stroke="#d4af37" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 0 5px rgba(255,255,255,.9))' }} />
+        <path d="M130 8 120 -4h20Z" transform="translate(0 6)" fill="#fff" stroke="#c6f432" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 0 5px rgba(255,255,255,.9))' }} />
       </svg>
     </div>
   );

@@ -37,12 +37,12 @@ export function Coin({ size = 16, className }: { size?: number; className?: stri
     <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden>
       <defs>
         <linearGradient id="coin-g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f8e8a6" /><stop offset=".55" stopColor="#d4af37" /><stop offset="1" stopColor="#8f6f1f" />
+          <stop offset="0" stopColor="#e8fba0" /><stop offset=".55" stopColor="#c6f432" /><stop offset="1" stopColor="#6f9a12" />
         </linearGradient>
       </defs>
       <circle cx="12" cy="12" r="10.5" fill="url(#coin-g)" />
       <circle cx="12" cy="12" r="7.6" fill="none" stroke="rgba(60,40,0,.45)" strokeWidth="1" />
-      <path d="M12 6.6v10.8M9 11.2l3-3.3 3 3.3" fill="none" stroke="#5a3f08" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 6.6v10.8M9 11.2l3-3.3 3 3.3" fill="none" stroke="#1c2a04" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
