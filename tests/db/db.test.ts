@@ -400,3 +400,20 @@ describe('RLS и права', () => {
     expect(ad.users_total).toBeGreaterThan(0);
   });
 });
+
+describe('setup.sql', () => {
+  it('единый установочный скрипт применяется на пустую БД и актуален', async () => {
+    const { PGlite } = await import('@electric-sql/pglite');
+    const { readFileSync, readdirSync } = await import('node:fs');
+    const bundle = readFileSync('supabase/setup.sql', 'utf8');
+    const expected = readdirSync('supabase/migrations').filter((f) => f.endsWith('.sql')).sort().map((f) => readFileSync(`supabase/migrations/${f}`, 'utf8'));
+    for (const m of expected) expect(bundle, 'setup.sql устарел — выполните npm run db:bundle').toContain(m);
+    const fresh = new PGlite();
+    await fresh.exec(`create role anon nologin; create role authenticated nologin; create role service_role nologin; create schema auth;
+      create function auth.jwt() returns jsonb language sql stable as $$ select '{}'::jsonb $$;
+      grant usage on schema public, auth to anon, authenticated, service_role;`);
+    await fresh.exec(bundle);
+    const r = await fresh.query<any>('select count(*)::int c from public.cases');
+    expect(r.rows[0].c).toBeGreaterThanOrEqual(8);
+  });
+});

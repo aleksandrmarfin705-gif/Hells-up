@@ -15,7 +15,7 @@ import { Reveal } from '@/components/game/Reveal';
 import { Modal } from '@/components/ui/Modal';
 import { Button, ErrorState, Money, Skeleton } from '@/components/ui/ui';
 import { IconBack } from '@/components/brand/Icons';
-import { fmtPct } from '@/lib/format';
+import { fmt, fmtPct } from '@/lib/format';
 import { rarityOf } from '@/lib/rarity';
 import type { CaseDetail, Item } from '@/lib/types';
 
@@ -119,7 +119,7 @@ export default function CasePage() {
             <div className="mt-6 grid gap-2.5">
               <Button size="lg" onClick={() => close(true)} disabled={balance < (c?.price ?? 0)}>Открыть ещё</Button>
               <div className="grid grid-cols-2 gap-2.5">
-                <Button variant="dark" loading={sell.isPending} onClick={() => sell.mutate(result.user_item_id)}>Продать за {result.item.virtual_price}</Button>
+                <Button variant="dark" loading={sell.isPending} onClick={() => sell.mutate(result.user_item_id)}>Продать за {fmt(result.item.virtual_price)}</Button>
                 <Button variant="dark" onClick={() => router.push('/inventory')}>В инвентарь</Button>
               </div>
             </div>
